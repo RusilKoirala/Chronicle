@@ -11,9 +11,13 @@ export function useAchievements() {
 
   // Load from localStorage on mount
   useEffect(() => {
-    const data = storage.get<Achievement>(STORAGE_KEYS.ACHIEVEMENTS);
-    setAchievements(data);
-    setIsLoading(false);
+    const loadData = () => {
+      const data = storage.get<Achievement>(STORAGE_KEYS.ACHIEVEMENTS);
+      setAchievements(data);
+      setIsLoading(false);
+    };
+    
+    loadData();
   }, []);
 
   // Save to localStorage whenever achievements change
