@@ -9,7 +9,7 @@
 !.yarn/plugins
 !.yarn/releases
 !.yarn/versions
-
+AI_PROMPT.md
 # testing
 /coverage
 
