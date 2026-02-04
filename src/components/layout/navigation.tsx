@@ -3,6 +3,8 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { cn } from '@/lib/utils';
+import { ThemeToggle } from '@/components/theme-toggle';
+import { DataManagement } from '@/components/data-management';
 
 const navItems = [
   { href: '/', label: 'Dashboard' },
@@ -41,19 +43,23 @@ export function Navigation() {
             ))}
           </div>
 
-          {/* Mobile menu - simplified for MVP */}
-          <div className="md:hidden">
-            <select
-              value={pathname}
-              onChange={(e) => window.location.href = e.target.value}
-              className="text-sm border rounded px-2 py-1"
-            >
-              {navItems.map((item) => (
-                <option key={item.href} value={item.href}>
-                  {item.label}
-                </option>
-              ))}
-            </select>
+          <div className="flex items-center gap-2">
+            <DataManagement />
+            <ThemeToggle />
+            {/* Mobile menu - simplified for MVP */}
+            <div className="md:hidden">
+              <select
+                value={pathname}
+                onChange={(e) => window.location.href = e.target.value}
+                className="text-sm border rounded px-2 py-1 bg-background"
+              >
+                {navItems.map((item) => (
+                  <option key={item.href} value={item.href}>
+                    {item.label}
+                  </option>
+                ))}
+              </select>
+            </div>
           </div>
         </div>
       </div>
