@@ -10,6 +10,7 @@ import { StatusIndicator } from '@/components/status-indicator';
 import { Button } from '@/components/ui/button';
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from '@/components/ui/sheet';
 import { FloatingActionMenu, quickActionPresets } from '@/components/ui/floating-action-menu';
+import { Logo } from '@/components/ui/logo';
 import { 
   Menu, 
   Home, 
@@ -18,6 +19,7 @@ import {
   Target, 
   CheckSquare, 
   Repeat,
+  Bell,
   Settings
 } from 'lucide-react';
 
@@ -28,6 +30,7 @@ const navItems = [
   { href: '/goals', label: 'Goals', icon: Target },
   { href: '/tasks', label: 'Tasks', icon: CheckSquare },
   { href: '/routines', label: 'Routines', icon: Repeat },
+  { href: '/reminders', label: 'Reminders', icon: Bell },
 ];
 
 export function Navigation() {
@@ -52,8 +55,8 @@ export function Navigation() {
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
               <StatusIndicator />
-              <Link href="/dashboard" className="text-xl font-bold">
-                Chronicle
+              <Link href="/dashboard">
+                <Logo size="sm" variant="full" />
               </Link>
             </div>
             
@@ -99,7 +102,9 @@ export function Navigation() {
                     {/* Header with User Profile */}
                     <div className="p-6 border-b">
                       <SheetHeader className="text-left">
-                        <SheetTitle className="text-lg">Chronicle</SheetTitle>
+                        <SheetTitle className="flex items-center gap-2">
+                          <Logo size="sm" variant="full" />
+                        </SheetTitle>
                       </SheetHeader>
                       <UserProfileMobile />
                     </div>
@@ -147,7 +152,7 @@ export function Navigation() {
 
       {/* Bottom Navigation for Mobile */}
       <div className="lg:hidden fixed bottom-0 left-0 right-0 z-50 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 border-t bottom-nav">
-        <div className="grid grid-cols-6 px-2 py-1">
+        <div className="grid grid-cols-7 px-2 py-1">
           {navItems.map((item) => {
             const Icon = item.icon;
             const isActive = pathname === item.href;
@@ -168,6 +173,7 @@ export function Navigation() {
                   {item.label === 'Achievements' ? 'Awards' : 
                    item.label === 'Resources' ? 'Notes' :
                    item.label === 'Dashboard' ? 'Home' :
+                   item.label === 'Reminders' ? 'Alerts' :
                    item.label}
                 </span>
               </Link>

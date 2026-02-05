@@ -200,6 +200,84 @@ export type GoalFormData = Omit<Goal, 'id' | 'createdAt' | 'updatedAt'>;
 export type TaskFormData = Omit<Task, 'id' | 'createdAt' | 'updatedAt'>;
 export type RoutineFormData = Omit<Routine, 'id' | 'createdAt' | 'updatedAt'>;
 
+// Smart Reminders types
+export type ReminderType = 'goal-deadline' | 'routine-schedule' | 'behind-schedule' | 'streak-maintenance';
+export type ReminderPriority = 'low' | 'medium' | 'high' | 'urgent';
+export type ReminderStatus = 'pending' | 'sent' | 'acknowledged' | 'snoozed' | 'dismissed';
+
+export interface Reminder extends BaseEntity {
+  type: ReminderType;
+  title: string;
+  message: string;
+  priority: ReminderPriority;
+  status: ReminderStatus;
+  scheduledFor: string;        // ISO date string
+  entityId: string;            // ID of related goal, task, or routine
+  entityType: 'goal' | 'task' | 'routine';
+  actionSuggestions: string[]; // Suggested next actions
+  snoozeUntil?: string;        // ISO date string
+  acknowledgedAt?: string;     // ISO date string
+}
+
+export interface ReminderPreferences extends BaseEntity {
+  userId: string;
+  goalDeadlineReminders: boolean;
+  routineReminders: boolean;
+  behindScheduleReminders: boolean;
+  streakMaintenanceReminders: boolean;
+  
+  // Timing preferences
+  workHoursStart: string;      // HH:MM format
+  workHoursEnd: string;        // HH:MM format
+  weekendReminders: boolean;
+  quietHoursStart: string;     // HH:MM format
+  quietHoursEnd: string;       // HH:MM format
+  
+  // Frequency preferences
+  maxRemindersPerDay: number;
+  reminderIntervals: {
+    goalDeadline: number[];    // Days before deadline [7, 3, 1]
+    behindSchedule: number;    // Hours between reminders
+    streakMaintenance: number; // Hours before streak breaks
+  };
+}
+
+export interface SmartSuggestion extends BaseEntity {
+  type: 'next-action' | 'catch-up' | 'optimization' | 'motivation';
+  title: string;
+  description: string;
+  reasoning: string;
+  priority: ReminderPriority;
+  estimatedTime: number;       // minutes
+  points: number;              // gamification points
+  actionData: any;             // specific to suggestion type
+  expiresAt: string;           // ISO date string
+}
+
+// Hook return types for reminders
+export interface ReminderHookReturn extends BaseHookReturn<Reminder> {
+  reminders: Reminder[];
+  addReminder: (reminder: Omit<Reminder, 'id' | 'createdAt' | 'updatedAt'>) => Promise<Reminder | undefined> | void;
+  updateReminder: (id: string, updates: Partial<Reminder>) => Promise<Reminder | undefined> | void;
+  deleteReminder: (id: string) => Promise<void> | void;
+  acknowledgeReminder: (id: string) => Promise<Reminder | undefined> | void;
+  snoozeReminder: (id: string, snoozeUntil: string) => Promise<Reminder | undefined> | void;
+  dismissReminder: (id: string) => Promise<Reminder | undefined> | void;
+  getPendingReminders: () => Reminder[];
+  getOverdueReminders: () => Reminder[];
+  getRemindersByType: (type: ReminderType) => Reminder[];
+  generateReminders: () => Promise<void>;
+  refetch?: () => Promise<void>;
+}
+
+export interface ReminderPreferencesHookReturn {
+  preferences: ReminderPreferences | null;
+  isLoading: boolean;
+  error: string | null;
+  updatePreferences: (updates: Partial<ReminderPreferences>) => Promise<ReminderPreferences | undefined> | void;
+  resetToDefaults: () => Promise<ReminderPreferences | undefined> | void;
+}
+
 // Component prop types
 export interface EntityCardProps<T> {
   item: T;

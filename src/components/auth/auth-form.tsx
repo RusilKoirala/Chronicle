@@ -8,6 +8,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Separator } from '@/components/ui/separator';
+import { Logo } from '@/components/ui/logo';
 import { auth, isSupabaseConfigured } from '@/lib/supabase';
 import { useDeviceDetection } from '@/hooks/use-device-detection';
 import { LoginLayout } from '@/components/layout/login-layout';
@@ -30,8 +31,8 @@ export function AuthForm({ onSuccess, standalone = false }: AuthFormProps) {
     const content = (
       <Card className="w-full max-w-md mx-auto">
         <CardHeader className="text-center">
-          <div className="w-16 h-16 mx-auto mb-4 bg-gradient-to-br from-blue-500 to-purple-600 rounded-2xl flex items-center justify-center">
-            <span className="text-white font-bold text-xl">C</span>
+          <div className="flex justify-center mb-4">
+            <Logo size="lg" variant="icon" />
           </div>
           <CardTitle className="text-2xl font-bold">Chronicle</CardTitle>
           <CardDescription>
@@ -147,8 +148,8 @@ export function AuthForm({ onSuccess, standalone = false }: AuthFormProps) {
   const content = (
     <Card className="w-full max-w-md mx-auto">
       <CardHeader className="text-center">
-        <div className="w-16 h-16 mx-auto mb-4 bg-gradient-to-br from-blue-500 to-purple-600 rounded-2xl flex items-center justify-center">
-          <span className="text-white font-bold text-xl">C</span>
+        <div className="flex justify-center mb-4">
+          <Logo size="lg" variant="icon" />
         </div>
         <CardTitle className="text-2xl font-bold">Chronicle</CardTitle>
         <CardDescription>

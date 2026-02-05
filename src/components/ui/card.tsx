@@ -2,12 +2,49 @@ import * as React from "react"
 
 import { cn } from "@/lib/utils"
 
-function Card({ className, ...props }: React.ComponentProps<"div">) {
+interface CardProps extends React.ComponentProps<"div"> {
+  variant?: "default" | "elevated" | "outlined";
+  padding?: "sm" | "md" | "lg";
+  interactive?: boolean;
+  mobile?: boolean;
+}
+
+function Card({ 
+  className, 
+  variant = "default", 
+  padding = "md", 
+  interactive = false,
+  mobile = false,
+  ...props 
+}: CardProps) {
+  const paddingClasses = {
+    sm: "py-4",
+    md: "py-6", 
+    lg: "py-8"
+  };
+
+  const variantClasses = {
+    default: "bg-card text-card-foreground shadow-system-subtle border",
+    elevated: "bg-card text-card-foreground shadow-system-elevated border-0",
+    outlined: "bg-card text-card-foreground border-2 shadow-none"
+  };
+
   return (
     <div
       data-slot="card"
+      data-variant={variant}
+      data-padding={padding}
+      data-interactive={interactive}
+      data-mobile={mobile}
       className={cn(
-        "bg-card text-card-foreground flex flex-col gap-6 rounded-xl border py-6 shadow-sm",
+        "flex flex-col gap-6 rounded-xl transition-system-normal",
+        variantClasses[variant],
+        paddingClasses[padding],
+        interactive && [
+          "cursor-pointer hover:shadow-system-medium",
+          mobile ? "active:scale-[0.98] touch-manipulation" : "hover:scale-[1.02]"
+        ],
+        mobile && "rounded-lg", // Smaller radius on mobile
         className
       )}
       {...props}
@@ -90,3 +127,5 @@ export {
   CardDescription,
   CardContent,
 }
+
+export type { CardProps }

@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
+import { Logo } from '@/components/ui/logo';
 import { Trophy, BookOpen, Target, CheckSquare, Repeat, Zap, Shield, Smartphone, Star, Users, Download } from 'lucide-react';
 import { LandingNavbar } from '@/components/landing/landing-navbar';
 import { DownloadButtons } from '@/components/landing/download-buttons';
@@ -26,8 +27,8 @@ export default function LandingPage() {
     return (
       <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-background to-muted">
         <div className="text-center">
-          <div className="w-16 h-16 mx-auto mb-4 bg-gradient-to-br from-blue-500 to-purple-600 rounded-2xl flex items-center justify-center">
-            <span className="text-white font-bold text-xl">C</span>
+          <div className="flex justify-center mb-4">
+            <Logo size="lg" variant="icon" />
           </div>
           <p className="text-muted-foreground">Redirecting to app...</p>
         </div>
@@ -51,8 +52,8 @@ export default function LandingPage() {
             </Badge>
             
             {/* App Icon */}
-            <div className="w-20 h-20 md:w-24 md:h-24 mx-auto mb-8 bg-gradient-to-br from-primary to-primary/80 rounded-3xl flex items-center justify-center shadow-2xl shadow-primary/25">
-              <span className="text-2xl md:text-3xl font-bold text-primary-foreground">C</span>
+            <div className="flex justify-center mb-8">
+              <Logo size="xl" variant="icon" />
             </div>
             
             {/* Main Heading */}
@@ -326,13 +327,8 @@ export default function LandingPage() {
         <div className="container mx-auto px-4">
           <div className="max-w-6xl mx-auto">
             <div className="flex flex-col md:flex-row items-center justify-between">
-              <div className="flex items-center space-x-3 mb-4 md:mb-0">
-                <div className="w-8 h-8 bg-gradient-to-br from-primary to-primary/80 rounded-lg flex items-center justify-center">
-                  <span className="text-primary-foreground font-bold text-sm">C</span>
-                </div>
-                <span className="font-bold text-xl">Chronicle</span>
-              </div>
-              <p className="text-muted-foreground text-center md:text-right">
+              <Logo size="sm" variant="full" />
+              <p className="text-muted-foreground text-center md:text-right mt-4 md:mt-0">
                 © 2026 Chronicle. Simple personal tracking for everyone.
               </p>
             </div>

@@ -1,9 +1,10 @@
 'use client';
 
 import { Button } from '@/components/ui/button';
-import { Apple, Smartphone, Monitor, Github } from 'lucide-react';
+import { Monitor, Github } from 'lucide-react';
 import { useDeviceDetection } from '@/hooks/use-device-detection';
 import Link from 'next/link';
+import Image from 'next/image';
 
 interface DownloadButtonsProps {
   variant?: 'hero' | 'cta';
@@ -22,11 +23,13 @@ export function DownloadButtons({ variant = 'hero', className = '' }: DownloadBu
       return (
         <Button 
           size={buttonSize} 
-          className={`bg-black hover:bg-gray-800 text-white ${buttonClass}`}
+          className={`bg-white hover:bg-gray-100 text-black border border-gray-200 ${buttonClass}`}
           asChild
         >
           <a href="/downloads/chronicle-ios.ipa" download className="flex items-center gap-3">
-            <Apple className="h-6 w-6" />
+            <div className="w-8 h-8 flex items-center justify-center">
+              <Image src="/apple.svg" alt="Apple" width={32} height={32} className="w-8 h-8" />
+            </div>
             Download
           </a>
         </Button>
@@ -37,11 +40,13 @@ export function DownloadButtons({ variant = 'hero', className = '' }: DownloadBu
       return (
         <Button 
           size={buttonSize} 
-          className={`bg-green-600 hover:bg-green-700 text-white ${buttonClass}`}
+          className={`bg-white hover:bg-gray-100 text-black border border-gray-200 ${buttonClass}`}
           asChild
         >
           <a href="/downloads/chronicle-android.apk" download className="flex items-center gap-3">
-            <Smartphone className="h-6 w-6" />
+            <div className="w-8 h-8 flex items-center justify-center">
+              <Image src="/android.svg" alt="Android" width={32} height={32} className="w-8 h-8" />
+            </div>
             Download
           </a>
         </Button>
@@ -67,12 +72,11 @@ export function DownloadButtons({ variant = 'hero', className = '' }: DownloadBu
   const getGitHubButton = () => (
     <Button 
       size={buttonSize} 
-      variant="outline" 
-      className={buttonClass}
+      className={`bg-black hover:bg-gray-800 text-white ${buttonClass}`}
       asChild
     >
       <a 
-        href="https://github.com/yourusername/chronicle" 
+        href="https://github.com/rusilkoirala/chronicle" 
         target="_blank" 
         rel="noopener noreferrer"
         className="flex items-center gap-3"
@@ -84,7 +88,7 @@ export function DownloadButtons({ variant = 'hero', className = '' }: DownloadBu
   );
 
   return (
-    <div className={`flex flex-col sm:flex-row gap-4 justify-center items-center ${className}`}>
+    <div className={`flex flex-row gap-4 justify-center items-center ${className}`}>
       {getMainButton()}
       {getGitHubButton()}
     </div>

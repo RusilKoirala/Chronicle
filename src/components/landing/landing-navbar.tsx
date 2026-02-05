@@ -2,6 +2,7 @@
 
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
+import { Logo } from '@/components/ui/logo';
 import { Github, Menu, X } from 'lucide-react';
 import { useState } from 'react';
 import { useDeviceDetection } from '@/hooks/use-device-detection';
@@ -20,11 +21,8 @@ export function LandingNavbar() {
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
-          <Link href="/" className="flex items-center space-x-2">
-            <div className="w-8 h-8 bg-gradient-to-br from-blue-500 to-purple-600 rounded-lg flex items-center justify-center">
-              <span className="text-white font-bold text-sm">C</span>
-            </div>
-            <span className="font-bold text-xl text-slate-900 dark:text-white">Chronicle</span>
+          <Link href="/">
+            <Logo size="sm" variant="icon" />
           </Link>
 
           {/* Desktop Navigation */}

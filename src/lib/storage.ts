@@ -6,6 +6,9 @@ export const STORAGE_KEYS = {
   GOALS: 'tracker_goals',
   TASKS: 'tracker_tasks',
   ROUTINES: 'tracker_routines',
+  REMINDERS: 'tracker_reminders',
+  REMINDER_PREFERENCES: 'tracker_reminder_preferences',
+  SMART_SUGGESTIONS: 'tracker_smart_suggestions',
   VERSION: 'tracker_version'
 } as const;
 
@@ -49,6 +52,10 @@ export const storage = {
       Object.values(STORAGE_KEYS).forEach(key => {
         localStorage.removeItem(key);
       });
+      // Also clear the reminder-related keys that use different naming
+      localStorage.removeItem('reminders');
+      localStorage.removeItem('reminder-preferences');
+      localStorage.removeItem('smart-suggestions');
     } catch (error) {
       console.error('Error clearing localStorage:', error);
     }
@@ -64,6 +71,9 @@ export const storage = {
       goals: storage.get(STORAGE_KEYS.GOALS),
       tasks: storage.get(STORAGE_KEYS.TASKS),
       routines: storage.get(STORAGE_KEYS.ROUTINES),
+      reminders: storage.get('reminders'),
+      reminderPreferences: storage.get('reminder-preferences'),
+      smartSuggestions: storage.get('smart-suggestions'),
       version: '1.0',
       exportedAt: new Date().toISOString()
     };
@@ -89,6 +99,9 @@ export const storage = {
       if (data.goals) storage.set(STORAGE_KEYS.GOALS, data.goals);
       if (data.tasks) storage.set(STORAGE_KEYS.TASKS, data.tasks);
       if (data.routines) storage.set(STORAGE_KEYS.ROUTINES, data.routines);
+      if (data.reminders) storage.set('reminders', data.reminders);
+      if (data.reminderPreferences) storage.set('reminder-preferences', data.reminderPreferences);
+      if (data.smartSuggestions) storage.set('smart-suggestions', data.smartSuggestions);
       
       return true;
     } catch (error) {
