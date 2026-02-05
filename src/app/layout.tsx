@@ -1,8 +1,9 @@
 import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import { Navigation } from "@/components/layout/navigation";
+import { ConditionalNavigation } from "@/components/layout/conditional-navigation";
 import { ThemeProvider } from "@/components/theme-provider";
+import { AuthProvider } from "@/components/auth/auth-provider";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -58,12 +59,14 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <Navigation />
-          <main className="min-h-screen bg-background pb-20 md:pb-0">
-            <div className="safe-area-inset">
-              {children}
-            </div>
-          </main>
+          <AuthProvider>
+            <ConditionalNavigation />
+            <main className="min-h-screen bg-background pb-28 lg:pb-0">
+              <div className="safe-area-inset">
+                {children}
+              </div>
+            </main>
+          </AuthProvider>
         </ThemeProvider>
       </body>
     </html>

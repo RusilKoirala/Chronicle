@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { useResources } from '@/hooks/use-resources';
+import { useHybridResources } from '@/hooks/use-hybrid-resources';
 import { ResourceCard } from './resource-card';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
@@ -22,7 +22,7 @@ export function ResourceList() {
     getResourcesByType, 
     getResourcesByCategory,
     getAllCategories 
-  } = useResources();
+  } = useHybridResources();
   
   const [searchQuery, setSearchQuery] = useState('');
   const [typeFilter, setTypeFilter] = useState<Resource['type'] | 'all'>('all');

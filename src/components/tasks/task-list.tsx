@@ -9,7 +9,7 @@ import { Input } from '@/components/ui/input';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Plus, Search } from 'lucide-react';
-import { useTasks } from '@/hooks/use-tasks';
+import { useHybridTasks } from '@/hooks/use-hybrid-tasks';
 
 export function TaskList() {
   const { 
@@ -20,7 +20,7 @@ export function TaskList() {
     toggleComplete,
     getActiveTasks,
     getCompletedTasks
-  } = useTasks();
+  } = useHybridTasks();
   
   const [isFormOpen, setIsFormOpen] = useState(false);
   const [editingTask, setEditingTask] = useState<Task | null>(null);

@@ -6,7 +6,7 @@ import { AchievementForm } from '@/components/achievements/achievement-form';
 import { AchievementFilter } from '@/components/achievements/achievement-filter';
 import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
-import { useAchievements } from '@/hooks/use-achievements';
+import { useHybridAchievements } from '@/hooks/use-hybrid-achievements';
 import { Achievement } from '@/types';
 import { Plus } from 'lucide-react';
 
@@ -16,7 +16,7 @@ export default function AchievementsPage() {
   const [searchTerm, setSearchTerm] = useState('');
   const [filterType, setFilterType] = useState<Achievement['type'] | 'all'>('all');
   
-  const { achievements, addAchievement, updateAchievement, deleteAchievement, isLoading } = useAchievements();
+  const { achievements, addAchievement, updateAchievement, deleteAchievement, isLoading } = useHybridAchievements();
 
   // Filter achievements based on search and type filter
   const filteredAchievements = achievements

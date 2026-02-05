@@ -9,7 +9,7 @@ import { Input } from '@/components/ui/input';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Plus, Search } from 'lucide-react';
-import { useRoutines } from '@/hooks/use-routines';
+import { useHybridRoutines } from '@/hooks/use-hybrid-routines';
 
 export function RoutineList() {
   const { 
@@ -20,7 +20,7 @@ export function RoutineList() {
     toggleActive,
     getActiveRoutines,
     getInactiveRoutines
-  } = useRoutines();
+  } = useHybridRoutines();
   
   const [isFormOpen, setIsFormOpen] = useState(false);
   const [editingRoutine, setEditingRoutine] = useState<Routine | null>(null);

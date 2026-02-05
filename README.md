@@ -1,248 +1,159 @@
-# Chronicle - Personal Tracker
+# Chronicle
 
-A simple, personal tracking application to help manage and remember achievements, resources, goals, tasks, and routines. Built as a web-first application that also works on mobile devices.
+> Your personal tracking companion for achievements, goals, tasks, and more.
+
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Next.js](https://img.shields.io/badge/Next.js-16.1.6-black)](https://nextjs.org/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.0-blue)](https://www.typescriptlang.org/)
+[![Capacitor](https://img.shields.io/badge/Capacitor-8.0-blue)](https://capacitorjs.com/)
+
+Chronicle is a simple, clean personal tracking application that helps you manage and remember your achievements, save important resources, set goals, manage tasks, and build routines. Built with modern web technologies and available on web, iOS, and Android.
 
 ## ✨ Features
 
-### 🏆 Achievements Tracker
-- Track books read, certificates earned, skills learned, and other accomplishments
-- Add descriptions, completion dates, tags, and proof URLs
-- Filter by type and search functionality
-- Visual cards with detailed information
+- **🏆 Track Achievements** - Remember books read, certificates earned, skills learned
+- **📚 Save Resources** - Store important notes, links, and information
+- **🎯 Set Goals** - Plan your future and track progress
+- **✅ Manage Tasks** - Daily todos and task management
+- **🔄 Build Routines** - Create repeating daily and weekly habits
+- **🌙 Dark Mode** - Beautiful light and dark themes
+- **📱 Cross-Platform** - Web, iOS, and Android support
+- **🔒 Privacy First** - Your data stays with you
 
-### 📚 Resources Library
-- Save important notes, links, files, and information
-- Organize by categories and tags
-- Different display formats for different resource types
-- Full-text search across all resources
+## 🚀 Quick Start
 
-### 🎯 Goals Planner
-- Set and track progress towards your goals
-- Visual progress bars and status tracking
-- Target dates and completion tracking
-- Click progress bars for quick updates
+### Web App
+Visit [chronicle-app.com](https://chronicle-app.com) to use Chronicle in your browser.
 
-### ✅ Task Manager
-- Daily task management with due dates
-- Mark tasks as routine or one-time
-- Filter by active, completed, or all tasks
-- Overdue and due-today indicators
+### Mobile Apps
+- **iOS**: [Download from App Store](https://apps.apple.com/app/chronicle)
+- **Android**: [Download APK](https://chronicle-app.com/downloads/chronicle-android.apk)
 
-### 🔄 Routine Builder
-- Create repeating daily/weekly routines
-- Flexible day-of-week selection
-- Active/inactive toggle for seasonal routines
-- Today's routine overview
-
-### 🌙 Dark/Light Mode
-- System-aware theme switching
-- Manual theme toggle
-- Consistent theming across all components
-
-### � Data Management
-- Export all data as JSON backup
-- Import data from backup files
-- Local storage with instant sync
-- Clear all data option
-
-## 🚀 Getting Started
+## 🛠 Development
 
 ### Prerequisites
-- Node.js 18+ 
-- npm or yarn
+- Node.js 18+ and npm
+- Java 21 (for Android builds)
+- Xcode (for iOS builds, macOS only)
 
 ### Installation
 
-1. **Clone the repository**
-   ```bash
-   git clone <repository-url>
-   cd chronicle
-   ```
+```bash
+# Clone the repository
+git clone https://github.com/yourusername/chronicle.git
+cd chronicle
 
-2. **Install dependencies**
-   ```bash
-   npm install
-   ```
+# Install dependencies
+npm install
 
-3. **Run development server**
-   ```bash
-   npm run dev
-   ```
+# Start development server
+npm run dev
+```
 
-4. **Open in browser**
-   Navigate to [http://localhost:3000](http://localhost:3000)
+### Building
 
-## � Mobile App (iOS/Android)
+```bash
+# Build web app
+npm run build
 
-### Prerequisites for Mobile
-- Xcode (for iOS development)
-- Android Studio (for Android development)
-- iOS Simulator or physical iOS device
-- Android Emulator or physical Android device
+# Build mobile apps
+npm run build:apps
+```
 
-### Build Mobile Apps
-
-1. **Build web assets**
-   ```bash
-   npm run build:mobile
-   ```
-
-2. **Open iOS project**
-   ```bash
-   npm run ios
-   ```
-
-3. **Open Android project**
-   ```bash
-   npm run android
-   ```
-
-### Mobile Development Workflow
-1. Make changes to your web app
-2. Run `npm run build:mobile` to sync changes
-3. Build and test in Xcode/Android Studio
-
-## 🛠 Tech Stack
-
-- **Frontend**: Next.js 14, React, TypeScript
-- **UI Components**: shadcn/ui, Tailwind CSS
-- **Icons**: Lucide React
-- **Mobile**: Capacitor 6
-- **Storage**: localStorage (MVP), Supabase (future)
-- **Deployment**: Vercel (web), App Stores (mobile)
-
-## 📁 Project Structure
+### Project Structure
 
 ```
 chronicle/
+├── docs/                    # Documentation
+├── public/                  # Static assets
+│   └── downloads/          # Mobile app files
 ├── src/
-│   ├── app/                    # Next.js App Router pages
-│   ├── components/             # React components
-│   │   ├── ui/                # shadcn/ui components
-│   │   ├── achievements/      # Achievement components
-│   │   ├── resources/         # Resource components
-│   │   ├── goals/             # Goal components
-│   │   ├── tasks/             # Task components
-│   │   ├── routines/          # Routine components
-│   │   └── layout/            # Layout components
-│   ├── hooks/                 # Custom React hooks
-│   ├── lib/                   # Utility functions
-│   └── types/                 # TypeScript definitions
-├── ios/                       # iOS Capacitor project
-├── android/                   # Android Capacitor project
-└── out/                       # Static build output
+│   ├── app/                # Next.js app router pages
+│   ├── components/         # React components
+│   │   ├── ui/            # Reusable UI components
+│   │   ├── auth/          # Authentication components
+│   │   ├── landing/       # Landing page components
+│   │   └── layout/        # Layout components
+│   ├── hooks/             # Custom React hooks
+│   ├── lib/               # Utility functions
+│   └── types/             # TypeScript type definitions
+├── android/               # Android app (Capacitor)
+├── ios/                   # iOS app (Capacitor)
+└── scripts/               # Build and utility scripts
 ```
 
-## 🎨 Available Scripts
+## 📱 Mobile Development
 
-- `npm run dev` - Start development server
-- `npm run build` - Build for production
-- `npm run build:mobile` - Build and sync with mobile apps
-- `npm run ios` - Open iOS project in Xcode
-- `npm run android` - Open Android project in Android Studio
-- `npm run add:ios` - Add iOS platform
-- `npm run add:android` - Add Android platform
+Chronicle uses [Capacitor](https://capacitorjs.com/) to create native mobile apps from the web codebase.
 
-## 💾 Data Storage
+### Android
+```bash
+# Add Android platform
+npx cap add android
 
-### Current (MVP)
-- **localStorage**: All data stored locally in browser
-- **Export/Import**: JSON backup and restore functionality
-- **No sync**: Single device, offline-first
+# Build and sync
+npm run build:mobile
 
-### Future (Phase 3)
-- **Supabase**: Cloud database with real-time sync
-- **Authentication**: User accounts and data isolation
-- **Multi-device**: Sync across devices
-
-## 🔧 Configuration
-
-### Environment Variables
-Create `.env.local` for future backend integration:
-```env
-# Future Supabase configuration
-NEXT_PUBLIC_SUPABASE_URL=your_supabase_url
-NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_anon_key
+# Open in Android Studio
+npm run android
 ```
 
-### Capacitor Configuration
-Mobile app settings in `capacitor.config.ts`:
-```typescript
-const config: CapacitorConfig = {
-  appId: 'com.chronicle.app',
-  appName: 'Chronicle',
-  webDir: 'out'
-};
+### iOS
+```bash
+# Add iOS platform
+npx cap add ios
+
+# Build and sync
+npm run build:mobile
+
+# Open in Xcode
+npm run ios
 ```
 
-## 🧪 Testing
+## 🎨 Tech Stack
 
-### Manual Testing Checklist
-- [ ] Add items to each category (achievements, resources, goals, tasks, routines)
-- [ ] Edit and delete items
-- [ ] Search and filter functionality
-- [ ] Data persistence on page reload
-- [ ] Export/import data
-- [ ] Theme switching
-- [ ] Mobile responsiveness
+- **Frontend**: Next.js 16, React 19, TypeScript
+- **Styling**: Tailwind CSS, shadcn/ui
+- **Mobile**: Capacitor 8
+- **Storage**: localStorage (web), native storage (mobile)
+- **Authentication**: Supabase (optional)
+- **Deployment**: Vercel (web), App Stores (mobile)
 
-### Browser Testing
-- [ ] Chrome/Chromium
-- [ ] Safari
-- [ ] Firefox
-- [ ] Mobile browsers
+## 📖 Documentation
+
+- [Getting Started](docs/getting-started.md)
+- [Development Guide](docs/development.md)
+- [Mobile App Building](docs/mobile-builds.md)
+- [Deployment Guide](docs/deployment.md)
+- [Contributing](docs/contributing.md)
 
 ## 🤝 Contributing
 
+We welcome contributions! Please see our [Contributing Guide](docs/contributing.md) for details.
+
 1. Fork the repository
-2. Create a feature branch: `git checkout -b feature/amazing-feature`
-3. Commit changes: `git commit -m 'Add amazing feature'`
-4. Push to branch: `git push origin feature/amazing-feature`
+2. Create your feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add some amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
 5. Open a Pull Request
 
-## 📝 License
+## 📄 License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
-## 🗺 Roadmap
-
-### ✅ Phase 1: MVP (Complete)
-- [x] All 5 core features (achievements, resources, goals, tasks, routines)
-- [x] localStorage data persistence
-- [x] Export/import functionality
-- [x] Dark/light mode
-- [x] Responsive design
-
-### ✅ Phase 2: Mobile App (Complete)
-- [x] Capacitor integration
-- [x] iOS app setup
-- [x] Android app setup
-- [x] Static export configuration
-
-### 🔄 Phase 3: Backend Integration (Future)
-- [ ] Supabase integration
-- [ ] User authentication
-- [ ] Cloud data sync
-- [ ] Multi-device support
-
-### 🔄 Phase 4: Enhanced Features (Future)
-- [ ] Push notifications
-- [ ] Advanced analytics
-- [ ] Data visualization
-- [ ] Collaboration features
-- [ ] API integrations
-
-## 📞 Support
-
-For support, please open an issue on GitHub or contact [your-email@example.com].
 
 ## 🙏 Acknowledgments
 
 - [Next.js](https://nextjs.org/) for the amazing React framework
 - [shadcn/ui](https://ui.shadcn.com/) for beautiful UI components
-- [Capacitor](https://capacitorjs.com/) for mobile app capabilities
+- [Capacitor](https://capacitorjs.com/) for cross-platform mobile development
 - [Tailwind CSS](https://tailwindcss.com/) for utility-first styling
+
+## 📞 Support
+
+- 📧 Email: support@chronicle-app.com
+- 🐛 Issues: [GitHub Issues](https://github.com/yourusername/chronicle/issues)
+- 💬 Discussions: [GitHub Discussions](https://github.com/yourusername/chronicle/discussions)
 
 ---
 
-**Built with ❤️ for personal productivity and growth tracking.**
+Made with ❤️ by the Chronicle team

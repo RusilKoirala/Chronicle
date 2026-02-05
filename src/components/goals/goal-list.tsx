@@ -9,10 +9,10 @@ import { Input } from '@/components/ui/input';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Plus, Search } from 'lucide-react';
-import { useGoals } from '@/hooks/use-goals';
+import { useHybridGoals } from '@/hooks/use-hybrid-goals';
 
 export function GoalList() {
-  const { goals, addGoal, updateGoal, deleteGoal, updateProgress } = useGoals();
+  const { goals, addGoal, updateGoal, deleteGoal, updateProgress } = useHybridGoals();
   const [isFormOpen, setIsFormOpen] = useState(false);
   const [editingGoal, setEditingGoal] = useState<Goal | null>(null);
   const [searchQuery, setSearchQuery] = useState('');
