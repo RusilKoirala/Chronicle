@@ -82,7 +82,6 @@ Chronicle is a personal tracking application that helps you:
 - Check the [FAQ](faq.md)
 - Read the [Development Guide](development.md)
 - Open an [issue on GitHub](https://github.com/yourusername/chronicle/issues)
-- Email us at support@chronicle-app.com
 
 ## What's Next?
 

@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { ConditionalNavigation } from "@/components/layout/conditional-navigation";
+import { ConditionalMainLayout } from "@/components/layout/conditional-main-layout";
 import { ThemeProvider } from "@/components/theme-provider";
 import { AuthProvider } from "@/components/auth/auth-provider";
 
@@ -61,11 +62,9 @@ export default function RootLayout({
         >
           <AuthProvider>
             <ConditionalNavigation />
-            <main className="min-h-screen bg-background pb-28 lg:pb-0">
-              <div className="safe-area-inset">
-                {children}
-              </div>
-            </main>
+            <ConditionalMainLayout>
+              {children}
+            </ConditionalMainLayout>
           </AuthProvider>
         </ThemeProvider>
       </body>

@@ -84,8 +84,7 @@ Currently, we do not offer a formal bug bounty program, but we greatly appreciat
 ## Contact
 
 For security-related questions or concerns:
-- Email: security@chronicle-app.com
 - GitHub: Use private vulnerability reporting
-- General support: support@chronicle-app.com
+- GitHub Issues: For general security questions (non-sensitive)
 
 Thank you for helping keep Chronicle secure!

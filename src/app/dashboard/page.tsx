@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { AuthGuard } from '@/components/auth/auth-guard';
+import { MobileLayout, MobilePageHeader, MobileCardGrid, MobileCard } from '@/components/layout/mobile-layout';
 import { useHybridAchievements } from '@/hooks/use-hybrid-achievements';
 import { useHybridResources } from '@/hooks/use-hybrid-resources';
 import { useHybridGoals } from '@/hooks/use-hybrid-goals';
@@ -22,11 +23,11 @@ function DashboardContent() {
 
   if (isLoading) {
     return (
-      <div className="container mx-auto p-4 max-w-6xl">
+      <MobileLayout>
         <div className="flex justify-center items-center h-64">
           <p className="text-muted-foreground">Loading dashboard...</p>
         </div>
-      </div>
+      </MobileLayout>
     );
   }
 
@@ -57,18 +58,19 @@ function DashboardContent() {
   const hasAnyData = achievements.length > 0 || resources.length > 0 || goals.length > 0 || tasks.length > 0 || routines.length > 0;
 
   return (
-    <div className="container mx-auto p-4 max-w-6xl">
-      <div className="mb-6">
-        <h1 className="text-2xl md:text-3xl font-bold mb-2">Dashboard</h1>
-        <p className="text-muted-foreground text-sm md:text-base">
-          Welcome to Chronicle - your personal tracking companion
-        </p>
-      </div>
+    <MobileLayout>
+      <MobilePageHeader
+        title="Dashboard"
+        description="Welcome to Chronicle - your personal tracking companion"
+      />
       
       {/* Stats Grid - Mobile optimized */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4 mb-6">
+      <MobileCardGrid 
+        columns={{ mobile: 1, tablet: 2, desktop: 3 }}
+        className="mb-6"
+      >
         {/* Achievements Card */}
-        <Card className="hover:shadow-md transition-all duration-200 hover-lift">
+        <MobileCard hover>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">Achievements</CardTitle>
             <Trophy className="h-4 w-4 text-muted-foreground" />
@@ -94,15 +96,15 @@ function DashboardContent() {
               </div>
             </div>
             <Link href="/achievements">
-              <Button className="w-full mt-4 touch-target" variant="outline" size="sm">
+              <Button className="w-full mt-4" variant="outline" size="sm">
                 View All
               </Button>
             </Link>
           </CardContent>
-        </Card>
+        </MobileCard>
 
         {/* Resources Card */}
-        <Card className="hover:shadow-md transition-all duration-200 hover-lift">
+        <MobileCard hover>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">Resources</CardTitle>
             <BookOpen className="h-4 w-4 text-muted-foreground" />
@@ -128,15 +130,15 @@ function DashboardContent() {
               </div>
             </div>
             <Link href="/resources">
-              <Button className="w-full mt-4 touch-target" variant="outline" size="sm">
+              <Button className="w-full mt-4" variant="outline" size="sm">
                 View All
               </Button>
             </Link>
           </CardContent>
-        </Card>
+        </MobileCard>
 
         {/* Goals Card */}
-        <Card className="hover:shadow-md transition-all duration-200 hover-lift">
+        <MobileCard hover>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">Goals</CardTitle>
             <Target className="h-4 w-4 text-muted-foreground" />
@@ -158,15 +160,15 @@ function DashboardContent() {
               </div>
             </div>
             <Link href="/goals">
-              <Button className="w-full mt-4 touch-target" variant="outline" size="sm">
+              <Button className="w-full mt-4" variant="outline" size="sm">
                 View All
               </Button>
             </Link>
           </CardContent>
-        </Card>
+        </MobileCard>
 
         {/* Tasks Card */}
-        <Card className="hover:shadow-md transition-all duration-200 hover-lift">
+        <MobileCard hover>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">Tasks</CardTitle>
             <CheckSquare className="h-4 w-4 text-muted-foreground" />
@@ -188,15 +190,15 @@ function DashboardContent() {
               </div>
             </div>
             <Link href="/tasks">
-              <Button className="w-full mt-4 touch-target" variant="outline" size="sm">
+              <Button className="w-full mt-4" variant="outline" size="sm">
                 View All
               </Button>
             </Link>
           </CardContent>
-        </Card>
+        </MobileCard>
 
         {/* Routines Card */}
-        <Card className="hover:shadow-md transition-all duration-200 hover-lift">
+        <MobileCard hover>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">Routines</CardTitle>
             <Repeat className="h-4 w-4 text-muted-foreground" />
@@ -218,15 +220,15 @@ function DashboardContent() {
               </div>
             </div>
             <Link href="/routines">
-              <Button className="w-full mt-4 touch-target" variant="outline" size="sm">
+              <Button className="w-full mt-4" variant="outline" size="sm">
                 View All
               </Button>
             </Link>
           </CardContent>
-        </Card>
+        </MobileCard>
 
         {/* Today's Focus Card */}
-        <Card className="hover:shadow-md transition-all duration-200 hover-lift sm:col-span-2 xl:col-span-1">
+        <MobileCard hover className="sm:col-span-2 xl:col-span-1">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">Today's Focus</CardTitle>
             <Calendar className="h-4 w-4 text-muted-foreground" />
@@ -242,75 +244,75 @@ function DashboardContent() {
                 <span className="text-lg font-bold">{todaysRoutines.length}</span>
               </div>
             </div>
-            <div className="mt-4 button-group grid grid-cols-2 gap-2">
+            <div className="mt-4 grid grid-cols-2 gap-2">
               <Link href="/tasks">
-                <Button className="w-full touch-target" size="sm" variant="outline">
+                <Button className="w-full" size="sm" variant="outline">
                   Tasks
                 </Button>
               </Link>
               <Link href="/routines">
-                <Button className="w-full touch-target" size="sm" variant="outline">
+                <Button className="w-full" size="sm" variant="outline">
                   Routines
                 </Button>
               </Link>
             </div>
           </CardContent>
-        </Card>
-      </div>
+        </MobileCard>
+      </MobileCardGrid>
 
       {/* Quick Actions Section - Mobile optimized */}
       <div className="mb-8">
-        <h2 className="text-lg md:text-xl font-semibold mb-4">Quick Actions</h2>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-3">
+        <h2 className="text-lg font-semibold mb-4">Quick Actions</h2>
+        <MobileCardGrid columns={{ mobile: 1, tablet: 2, desktop: 5 }}>
           <Link href="/achievements">
-            <Button className="w-full justify-start touch-target" variant="outline">
+            <Button className="w-full justify-start" variant="outline">
               <Plus className="h-4 w-4 mr-2" />
               Add Achievement
             </Button>
           </Link>
           <Link href="/resources">
-            <Button className="w-full justify-start touch-target" variant="outline">
+            <Button className="w-full justify-start" variant="outline">
               <Plus className="h-4 w-4 mr-2" />
               Save Resource
             </Button>
           </Link>
           <Link href="/goals">
-            <Button className="w-full justify-start touch-target" variant="outline">
+            <Button className="w-full justify-start" variant="outline">
               <Plus className="h-4 w-4 mr-2" />
               Set Goal
             </Button>
           </Link>
           <Link href="/tasks">
-            <Button className="w-full justify-start touch-target" variant="outline">
+            <Button className="w-full justify-start" variant="outline">
               <Plus className="h-4 w-4 mr-2" />
               Add Task
             </Button>
           </Link>
-          <Link href="/routines">
-            <Button className="w-full justify-start sm:col-span-2 lg:col-span-1" variant="outline">
+          <Link href="/routines" className="sm:col-span-2 lg:col-span-1">
+            <Button className="w-full justify-start" variant="outline">
               <Plus className="h-4 w-4 mr-2" />
               Create Routine
             </Button>
           </Link>
-        </div>
+        </MobileCardGrid>
       </div>
 
       {/* Welcome Message for New Users */}
       {!hasAnyData && (
         <div className="text-center py-12">
-          <div className="mx-auto w-20 h-20 md:w-24 md:h-24 bg-muted rounded-full flex items-center justify-center mb-4">
-            <span className="text-xl md:text-2xl">🚀</span>
+          <div className="mx-auto w-20 h-20 bg-muted rounded-full flex items-center justify-center mb-4">
+            <span className="text-xl">🚀</span>
           </div>
           <h3 className="text-lg font-semibold mb-2">Welcome to Chronicle!</h3>
-          <p className="text-muted-foreground mb-4 max-w-md mx-auto text-sm md:text-base">
+          <p className="text-muted-foreground mb-4 max-w-md mx-auto text-sm">
             Start your tracking journey by adding your first achievement, resource, goal, task, or routine.
           </p>
           <Link href="/achievements">
-            <Button className="touch-target">Add Your First Achievement</Button>
+            <Button>Add Your First Achievement</Button>
           </Link>
         </div>
       )}
-    </div>
+    </MobileLayout>
   );
 }
 

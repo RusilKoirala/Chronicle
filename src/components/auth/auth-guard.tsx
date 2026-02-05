@@ -1,7 +1,8 @@
 'use client';
 
+import { useEffect } from 'react';
+import { useRouter } from 'next/navigation';
 import { useAuth } from './auth-provider';
-import { AuthForm } from './auth-form';
 import { isSupabaseConfigured } from '@/lib/supabase';
 
 interface AuthGuardProps {
@@ -10,11 +11,19 @@ interface AuthGuardProps {
 
 export function AuthGuard({ children }: AuthGuardProps) {
   const { user, loading } = useAuth();
+  const router = useRouter();
 
   // If Supabase is not configured, always show children (local mode)
   if (!isSupabaseConfigured) {
     return <>{children}</>;
   }
+
+  // Redirect to login page if not authenticated
+  useEffect(() => {
+    if (!loading && !user) {
+      router.push('/login');
+    }
+  }, [user, loading, router]);
 
   if (loading) {
     return (
@@ -28,7 +37,11 @@ export function AuthGuard({ children }: AuthGuardProps) {
   }
 
   if (!user) {
-    return <AuthForm />;
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <p className="text-muted-foreground">Redirecting to login...</p>
+      </div>
+    );
   }
 
   return <>{children}</>;

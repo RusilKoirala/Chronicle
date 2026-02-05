@@ -218,7 +218,6 @@ Chronicle is built with these principles:
 
 - **GitHub Issues**: Bug reports and feature requests
 - **GitHub Discussions**: Questions and community chat
-- **Email**: support@chronicle-app.com for direct contact
 
 ### Recognition
 
@@ -247,7 +246,6 @@ We use semantic versioning (semver):
 Don't hesitate to ask questions:
 - Open a GitHub Discussion
 - Comment on relevant issues
-- Email the maintainers
 
 We're here to help and appreciate your contributions!
 

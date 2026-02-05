@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import { usePathname } from 'next/navigation';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 import { Plus, X } from 'lucide-react';
@@ -12,6 +13,15 @@ interface FloatingActionButtonProps {
 
 export function FloatingActionButton({ children, className }: FloatingActionButtonProps) {
   const [isOpen, setIsOpen] = useState(false);
+  const pathname = usePathname();
+
+  // Don't render on login, auth, or landing pages
+  if (pathname === '/login' || 
+      pathname.startsWith('/auth/') || 
+      pathname === '/callback' ||
+      pathname === '/') {
+    return null;
+  }
 
   return (
     <div className={cn("fixed bottom-20 right-4 z-40 md:hidden", className)}>

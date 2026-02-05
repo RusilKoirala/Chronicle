@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import { usePathname } from 'next/navigation';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
@@ -40,17 +41,29 @@ export function FloatingActionMenu({
   position = 'bottom-right' 
 }: FloatingActionMenuProps) {
   const [isOpen, setIsOpen] = useState(false);
+  const pathname = usePathname();
+
+  // Don't render on login, auth, or landing pages
+  if (pathname === '/login' || 
+      pathname.startsWith('/auth/') || 
+      pathname === '/callback' ||
+      pathname === '/') {
+    return null;
+  }
 
   const handleActionClick = () => {
     setIsOpen(false);
   };
 
   return (
-    <div className={cn(
-      "lg:hidden fixed z-40",
-      positionVariants[position],
-      className
-    )}>
+    <div 
+      data-floating-action-menu
+      className={cn(
+        "lg:hidden fixed z-40",
+        positionVariants[position],
+        className
+      )}
+    >
       {/* Backdrop */}
       {isOpen && (
         <div 

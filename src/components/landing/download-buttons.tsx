@@ -1,7 +1,7 @@
 'use client';
 
 import { Button } from '@/components/ui/button';
-import { Apple, Smartphone, Monitor, Github, Download } from 'lucide-react';
+import { Apple, Smartphone, Monitor, Github } from 'lucide-react';
 import { useDeviceDetection } from '@/hooks/use-device-detection';
 import Link from 'next/link';
 
@@ -11,13 +11,13 @@ interface DownloadButtonsProps {
 }
 
 export function DownloadButtons({ variant = 'hero', className = '' }: DownloadButtonsProps) {
-  const { isIOS, isAndroid, isWeb } = useDeviceDetection();
+  const { isIOS, isAndroid } = useDeviceDetection();
 
   const buttonSize = variant === 'hero' ? 'lg' : 'default';
   const buttonClass = variant === 'hero' ? 'px-8 py-4 text-lg' : 'px-6 py-3';
 
-  // Show primary button based on device
-  const getPrimaryButton = () => {
+  // Single main button based on device
+  const getMainButton = () => {
     if (isIOS) {
       return (
         <Button 
@@ -27,7 +27,7 @@ export function DownloadButtons({ variant = 'hero', className = '' }: DownloadBu
         >
           <a href="/downloads/chronicle-ios.ipa" download className="flex items-center gap-3">
             <Apple className="h-6 w-6" />
-            Download for iOS
+            Download
           </a>
         </Button>
       );
@@ -42,133 +42,51 @@ export function DownloadButtons({ variant = 'hero', className = '' }: DownloadBu
         >
           <a href="/downloads/chronicle-android.apk" download className="flex items-center gap-3">
             <Smartphone className="h-6 w-6" />
-            Download APK
+            Download
           </a>
         </Button>
       );
     }
 
-    // Web users see web app button as primary
+    // Desktop/laptop users see "Open" button
     return (
       <Button 
         size={buttonSize} 
-        className={`bg-blue-600 hover:bg-blue-700 text-white ${buttonClass}`}
+        className={`bg-primary hover:bg-primary/90 text-primary-foreground ${buttonClass}`}
         asChild
       >
         <Link href="/dashboard" className="flex items-center gap-3">
           <Monitor className="h-6 w-6" />
-          Open Web App
+          Open
         </Link>
       </Button>
     );
   };
 
-  // Show secondary options
-  const getSecondaryButtons = () => {
-    if (isIOS) {
-      return (
-        <>
-          <Button 
-            size={buttonSize} 
-            variant="outline" 
-            className={buttonClass}
-            asChild
-          >
-            <Link href="/dashboard" className="flex items-center gap-3">
-              <Monitor className="h-5 w-5" />
-              Try Web Version
-            </Link>
-          </Button>
-          <Button 
-            size={buttonSize} 
-            variant="ghost" 
-            className={buttonClass}
-            asChild
-          >
-            <a href="/downloads/chronicle-android.apk" download className="flex items-center gap-3">
-              <Download className="h-5 w-5" />
-              Android APK
-            </a>
-          </Button>
-        </>
-      );
-    }
-
-    if (isAndroid) {
-      return (
-        <>
-          <Button 
-            size={buttonSize} 
-            variant="outline" 
-            className={buttonClass}
-            asChild
-          >
-            <Link href="/dashboard" className="flex items-center gap-3">
-              <Monitor className="h-5 w-5" />
-              Try Web Version
-            </Link>
-          </Button>
-          <Button 
-            size={buttonSize} 
-            variant="ghost" 
-            className={buttonClass}
-            asChild
-          >
-            <a href="/downloads/chronicle-ios.ipa" download className="flex items-center gap-3">
-              <Download className="h-5 w-5" />
-              iOS App
-            </a>
-          </Button>
-        </>
-      );
-    }
-
-    // Web users see mobile options as secondary
-    return (
-      <>
-        <Button 
-          size={buttonSize} 
-          variant="outline" 
-          className={buttonClass}
-          asChild
-        >
-          <a href="/downloads/chronicle-ios.ipa" download className="flex items-center gap-3">
-            <Apple className="h-5 w-5" />
-            iOS App
-          </a>
-        </Button>
-        <Button 
-          size={buttonSize} 
-          variant="outline" 
-          className={buttonClass}
-          asChild
-        >
-          <a href="/downloads/chronicle-android.apk" download className="flex items-center gap-3">
-            <Smartphone className="h-5 w-5" />
-            Android APK
-          </a>
-        </Button>
-        <Button 
-          size={buttonSize} 
-          variant="ghost" 
-          className={buttonClass}
-          asChild
-        >
-          <a href="https://github.com/yourusername/chronicle" className="flex items-center gap-3">
-            <Github className="h-5 w-5" />
-            GitHub
-          </a>
-        </Button>
-      </>
-    );
-  };
+  // GitHub button (always shown on the right)
+  const getGitHubButton = () => (
+    <Button 
+      size={buttonSize} 
+      variant="outline" 
+      className={buttonClass}
+      asChild
+    >
+      <a 
+        href="https://github.com/yourusername/chronicle" 
+        target="_blank" 
+        rel="noopener noreferrer"
+        className="flex items-center gap-3"
+      >
+        <Github className="h-5 w-5" />
+        GitHub
+      </a>
+    </Button>
+  );
 
   return (
     <div className={`flex flex-col sm:flex-row gap-4 justify-center items-center ${className}`}>
-      {getPrimaryButton()}
-      <div className="flex flex-col sm:flex-row gap-2">
-        {getSecondaryButtons()}
-      </div>
+      {getMainButton()}
+      {getGitHubButton()}
     </div>
   );
 }

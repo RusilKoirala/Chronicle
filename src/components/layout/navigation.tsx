@@ -34,6 +34,14 @@ export function Navigation() {
   const pathname = usePathname();
   const [isOpen, setIsOpen] = useState(false);
 
+  // Double-check: Don't render navigation on login or auth pages
+  if (pathname === '/login' || 
+      pathname.startsWith('/auth/') || 
+      pathname === '/callback' ||
+      pathname === '/') {
+    return null;
+  }
+
   const closeSheet = () => setIsOpen(false);
 
   return (
