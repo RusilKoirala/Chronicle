@@ -60,41 +60,57 @@ export function GoalList() {
   };
 
   return (
-    <div className="space-y-6">
-      <div className="flex flex-col sm:flex-row gap-4 items-start sm:items-center justify-between">
-        <div className="relative flex-1 max-w-sm">
-          <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-4 w-4" />
-          <Input
-            placeholder="Search goals..."
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-            className="pl-10"
-          />
+    <div className="space-y-4 md:space-y-6">
+      {/* Header with Search and Add Button */}
+      <div className="flex flex-col gap-4">
+        <div className="flex flex-col sm:flex-row gap-3 items-stretch sm:items-center justify-between">
+          <div className="relative flex-1 max-w-sm">
+            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-4 w-4" />
+            <Input
+              placeholder="Search goals..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className="pl-10"
+            />
+          </div>
+          <Button onClick={() => setIsFormOpen(true)} className="sm:w-auto">
+            <Plus className="h-4 w-4 mr-2" />
+            Add Goal
+          </Button>
         </div>
-        <Button onClick={() => setIsFormOpen(true)}>
-          <Plus className="h-4 w-4 mr-2" />
-          Add Goal
-        </Button>
       </div>
 
+      {/* Tabs - Mobile optimized */}
       <Tabs value={activeTab} onValueChange={setActiveTab}>
-        <TabsList className="grid w-full grid-cols-4">
-          <TabsTrigger value="all">All ({goalCounts.all})</TabsTrigger>
-          <TabsTrigger value="not-started">Not Started ({goalCounts['not-started']})</TabsTrigger>
-          <TabsTrigger value="in-progress">In Progress ({goalCounts['in-progress']})</TabsTrigger>
-          <TabsTrigger value="completed">Completed ({goalCounts.completed})</TabsTrigger>
+        <TabsList className="grid w-full grid-cols-2 md:grid-cols-4 h-auto">
+          <TabsTrigger value="all" className="text-xs md:text-sm px-2 py-2">
+            All ({goalCounts.all})
+          </TabsTrigger>
+          <TabsTrigger value="not-started" className="text-xs md:text-sm px-2 py-2">
+            <span className="hidden sm:inline">Not Started</span>
+            <span className="sm:hidden">New</span>
+            <span className="ml-1">({goalCounts['not-started']})</span>
+          </TabsTrigger>
+          <TabsTrigger value="in-progress" className="text-xs md:text-sm px-2 py-2">
+            <span className="hidden sm:inline">In Progress</span>
+            <span className="sm:hidden">Active</span>
+            <span className="ml-1">({goalCounts['in-progress']})</span>
+          </TabsTrigger>
+          <TabsTrigger value="completed" className="text-xs md:text-sm px-2 py-2">
+            Done ({goalCounts.completed})
+          </TabsTrigger>
         </TabsList>
 
-        <TabsContent value={activeTab} className="mt-6">
+        <TabsContent value={activeTab} className="mt-4 md:mt-6">
           {filteredGoals.length === 0 ? (
             <div className="text-center py-12">
-              <div className="mx-auto w-24 h-24 bg-muted rounded-full flex items-center justify-center mb-4">
-                <span className="text-2xl">🎯</span>
+              <div className="mx-auto w-20 h-20 md:w-24 md:h-24 bg-muted rounded-full flex items-center justify-center mb-4">
+                <span className="text-xl md:text-2xl">🎯</span>
               </div>
               <h3 className="text-lg font-semibold mb-2">
                 {searchQuery ? 'No goals found' : 'No goals yet'}
               </h3>
-              <p className="text-muted-foreground mb-4">
+              <p className="text-muted-foreground mb-4 text-sm md:text-base">
                 {searchQuery 
                   ? 'Try adjusting your search terms'
                   : 'Start by adding your first goal to track your progress'
@@ -108,7 +124,7 @@ export function GoalList() {
               )}
             </div>
           ) : (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4 md:gap-6">
               {filteredGoals.map((goal) => (
                 <GoalCard
                   key={goal.id}
@@ -123,8 +139,9 @@ export function GoalList() {
         </TabsContent>
       </Tabs>
 
+      {/* Mobile-optimized Dialog */}
       <Dialog open={isFormOpen} onOpenChange={setIsFormOpen}>
-        <DialogContent className="max-w-md">
+        <DialogContent className="w-[95vw] max-w-md mx-auto">
           <DialogHeader>
             <DialogTitle>
               {editingGoal ? 'Edit Goal' : 'Add New Goal'}

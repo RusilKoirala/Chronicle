@@ -89,40 +89,50 @@ export function TaskList() {
   };
 
   return (
-    <div className="space-y-6">
-      <div className="flex flex-col sm:flex-row gap-4 items-start sm:items-center justify-between">
-        <div className="relative flex-1 max-w-sm">
-          <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-4 w-4" />
-          <Input
-            placeholder="Search tasks..."
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-            className="pl-10"
-          />
+    <div className="space-y-4 md:space-y-6">
+      {/* Header with Search and Add Button */}
+      <div className="flex flex-col gap-4">
+        <div className="flex flex-col sm:flex-row gap-3 items-stretch sm:items-center justify-between">
+          <div className="relative flex-1 max-w-sm">
+            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-4 w-4" />
+            <Input
+              placeholder="Search tasks..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className="pl-10"
+            />
+          </div>
+          <Button onClick={() => setIsFormOpen(true)} className="sm:w-auto">
+            <Plus className="h-4 w-4 mr-2" />
+            Add Task
+          </Button>
         </div>
-        <Button onClick={() => setIsFormOpen(true)}>
-          <Plus className="h-4 w-4 mr-2" />
-          Add Task
-        </Button>
       </div>
 
+      {/* Tabs - Mobile optimized */}
       <Tabs value={activeTab} onValueChange={setActiveTab}>
-        <TabsList className="grid w-full grid-cols-3">
-          <TabsTrigger value="all">All ({taskCounts.all})</TabsTrigger>
-          <TabsTrigger value="active">Active ({taskCounts.active})</TabsTrigger>
-          <TabsTrigger value="completed">Completed ({taskCounts.completed})</TabsTrigger>
+        <TabsList className="grid w-full grid-cols-3 h-auto">
+          <TabsTrigger value="all" className="text-xs md:text-sm px-2 py-2">
+            All ({taskCounts.all})
+          </TabsTrigger>
+          <TabsTrigger value="active" className="text-xs md:text-sm px-2 py-2">
+            Active ({taskCounts.active})
+          </TabsTrigger>
+          <TabsTrigger value="completed" className="text-xs md:text-sm px-2 py-2">
+            Done ({taskCounts.completed})
+          </TabsTrigger>
         </TabsList>
 
-        <TabsContent value={activeTab} className="mt-6">
+        <TabsContent value={activeTab} className="mt-4 md:mt-6">
           {filteredTasks.length === 0 ? (
             <div className="text-center py-12">
-              <div className="mx-auto w-24 h-24 bg-muted rounded-full flex items-center justify-center mb-4">
-                <span className="text-2xl">✅</span>
+              <div className="mx-auto w-20 h-20 md:w-24 md:h-24 bg-muted rounded-full flex items-center justify-center mb-4">
+                <span className="text-xl md:text-2xl">✅</span>
               </div>
               <h3 className="text-lg font-semibold mb-2">
                 {searchQuery ? 'No tasks found' : 'No tasks yet'}
               </h3>
-              <p className="text-muted-foreground mb-4">
+              <p className="text-muted-foreground mb-4 text-sm md:text-base">
                 {searchQuery 
                   ? 'Try adjusting your search terms'
                   : 'Start by adding your first task to stay organized'
@@ -136,7 +146,7 @@ export function TaskList() {
               )}
             </div>
           ) : (
-            <div className="space-y-2">
+            <div className="space-y-2 md:space-y-3">
               {filteredTasks.map((task) => (
                 <TaskItem
                   key={task.id}
@@ -151,8 +161,9 @@ export function TaskList() {
         </TabsContent>
       </Tabs>
 
+      {/* Mobile-optimized Dialog */}
       <Dialog open={isFormOpen} onOpenChange={setIsFormOpen}>
-        <DialogContent className="max-w-md">
+        <DialogContent className="w-[95vw] max-w-md mx-auto">
           <DialogHeader>
             <DialogTitle>
               {editingTask ? 'Edit Task' : 'Add New Task'}

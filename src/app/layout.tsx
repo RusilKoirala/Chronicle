@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { Navigation } from "@/components/layout/navigation";
@@ -17,6 +17,23 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "Chronicle - Personal Tracker",
   description: "Track your achievements, resources, goals, tasks, and routines",
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: "default",
+    title: "Chronicle"
+  }
+};
+
+export const viewport: Viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  maximumScale: 1,
+  userScalable: false,
+  viewportFit: 'cover',
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "white" },
+    { media: "(prefers-color-scheme: dark)", color: "#0a0a0a" }
+  ]
 };
 
 export default function RootLayout({
@@ -26,6 +43,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
+      <head>
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+        <meta name="format-detection" content="telephone=no" />
+        <meta name="mobile-web-app-capable" content="yes" />
+      </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
@@ -36,8 +59,10 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           <Navigation />
-          <main className="min-h-screen bg-background">
-            {children}
+          <main className="min-h-screen bg-background pb-20 md:pb-0">
+            <div className="safe-area-inset">
+              {children}
+            </div>
           </main>
         </ThemeProvider>
       </body>
