@@ -1,22 +1,33 @@
 'use client';
 
 import { useState } from 'react';
-import { Goal } from '@/types';
+import { Goal, Task } from '@/types';
 import { GoalCard } from './goal-card';
 import { GoalForm } from './goal-form';
+import { TaskForm } from '@/components/tasks/task-form';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Plus, Search } from 'lucide-react';
 import { useHybridGoals } from '@/hooks/use-hybrid-goals';
+import { useHybridTasks } from '@/hooks/use-hybrid-tasks';
+import { useActionChaining } from '@/hooks/use-action-chaining';
+import { NextStepSuggestionsCompact } from '@/components/ui/next-step-suggestions';
+import { useDeviceDetection } from '@/hooks/use-device-detection';
 
 export function GoalList() {
   const { goals, addGoal, updateGoal, deleteGoal, updateProgress } = useHybridGoals();
+  const { addTask } = useHybridTasks();
+  const { suggestions, trackAction, clearSuggestions, executeSuggestion } = useActionChaining();
+  const { isMobile } = useDeviceDetection();
+  
   const [isFormOpen, setIsFormOpen] = useState(false);
   const [editingGoal, setEditingGoal] = useState<Goal | null>(null);
   const [searchQuery, setSearchQuery] = useState('');
   const [activeTab, setActiveTab] = useState('all');
+  const [isTaskFormOpen, setIsTaskFormOpen] = useState(false);
+  const [selectedGoalForTask, setSelectedGoalForTask] = useState<string | null>(null);
 
   const filteredGoals = goals.filter(goal => {
     const matchesSearch = goal.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -50,6 +61,40 @@ export function GoalList() {
   const handleCancel = () => {
     setIsFormOpen(false);
     setEditingGoal(null);
+  };
+
+  const handleAddRelatedTask = (goalId: string) => {
+    const goal = goals.find(g => g.id === goalId);
+    setSelectedGoalForTask(goalId);
+    setIsTaskFormOpen(true);
+  };
+
+  const handleTaskSubmit = (data: Omit<Task, 'id' | 'createdAt' | 'updatedAt'>) => {
+    const goal = goals.find(g => g.id === selectedGoalForTask);
+    const taskData = {
+      ...data,
+      description: data.description 
+        ? `${data.description}\n\nRelated to goal: ${goal?.title}`
+        : `Related to goal: ${goal?.title}`,
+    };
+    addTask(taskData);
+    setIsTaskFormOpen(false);
+    setSelectedGoalForTask(null);
+  };
+
+  const handleTaskCancel = () => {
+    setIsTaskFormOpen(false);
+    setSelectedGoalForTask(null);
+  };
+
+  const handleUpdateProgress = (id: string, progress: number) => {
+    const goal = goals.find(g => g.id === id);
+    updateProgress(id, progress);
+    
+    // Track action for next-step suggestions
+    if (goal) {
+      trackAction('goal', { ...goal, progress });
+    }
   };
 
   const goalCounts = {
@@ -131,7 +176,8 @@ export function GoalList() {
                   goal={goal}
                   onEdit={handleEdit}
                   onDelete={handleDelete}
-                  onUpdateProgress={updateProgress}
+                  onUpdateProgress={handleUpdateProgress}
+                  onAddRelatedTask={handleAddRelatedTask}
                 />
               ))}
             </div>
@@ -154,6 +200,28 @@ export function GoalList() {
           />
         </DialogContent>
       </Dialog>
+
+      {/* Task Form Dialog for adding related tasks */}
+      <Dialog open={isTaskFormOpen} onOpenChange={setIsTaskFormOpen}>
+        <DialogContent className="w-[95vw] max-w-md mx-auto">
+          <DialogHeader>
+            <DialogTitle>Add Task for Goal</DialogTitle>
+          </DialogHeader>
+          <TaskForm
+            onSubmit={handleTaskSubmit}
+            onCancel={handleTaskCancel}
+          />
+        </DialogContent>
+      </Dialog>
+
+      {/* Next-step suggestions after goal progress update */}
+      {isMobile && suggestions.length > 0 && (
+        <NextStepSuggestionsCompact
+          suggestions={suggestions}
+          onExecute={executeSuggestion}
+          onDismiss={clearSuggestions}
+        />
+      )}
     </div>
   );
 }

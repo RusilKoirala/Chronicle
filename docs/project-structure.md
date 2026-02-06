@@ -30,6 +30,10 @@ docs/
 ├── 📄 development.md          # Developer setup
 ├── 📄 contributing.md         # Contribution guidelines
 ├── 📄 project-structure.md    # This file
+├── 📁 design/                 # Design system docs
+│   └── 📄 design-system.md   # Design tokens & patterns
+├── 📁 features/               # Feature documentation
+│   └── 📄 fast-capture.md    # Fast capture system
 └── 📁 development/            # Development artifacts
     ├── 📄 PROJECT.md          # Original project spec
     └── 📄 AI_PROMPT.md        # AI development context
@@ -59,32 +63,59 @@ src/
 ├── 📁 app/                    # Next.js App Router
 │   ├── 📄 page.tsx           # Landing page
 │   ├── 📄 layout.tsx         # Root layout
+│   ├── 📄 globals.css        # Global styles
+│   ├── 📁 auth/              # Auth routes
+│   │   └── 📁 callback/      # OAuth callback
 │   ├── 📁 dashboard/         # Main app
 │   ├── 📁 achievements/      # Achievement pages
 │   ├── 📁 resources/         # Resource pages
 │   ├── 📁 goals/             # Goal pages
 │   ├── 📁 tasks/             # Task pages
 │   ├── 📁 routines/          # Routine pages
-│   └── 📁 settings/          # Settings pages
+│   ├── 📁 reminders/         # Reminder pages
+│   ├── 📁 settings/          # Settings pages
+│   ├── 📁 login/             # Login page
+│   └── 📁 debug/             # Debug utilities
 │
 ├── 📁 components/             # React components
 │   ├── 📁 ui/                # Reusable UI components
 │   ├── 📁 auth/              # Authentication
 │   ├── 📁 landing/           # Landing page
 │   ├── 📁 layout/            # Navigation & layout
+│   ├── 📁 onboarding/        # User onboarding
+│   ├── 📁 providers/         # Context providers
+│   ├── 📁 dashboard/         # Dashboard components
 │   ├── 📁 achievements/      # Achievement components
 │   ├── 📁 resources/         # Resource components
 │   ├── 📁 goals/             # Goal components
 │   ├── 📁 tasks/             # Task components
-│   └── 📁 routines/          # Routine components
+│   ├── 📁 routines/          # Routine components
+│   ├── 📁 reminders/         # Reminder components
+│   └── 📁 debug/             # Debug components
 │
 ├── 📁 hooks/                  # Custom React hooks
 │   ├── 📄 use-*.ts           # Feature-specific hooks
-│   └── 📄 use-hybrid-*.ts    # Hybrid storage hooks
+│   ├── 📄 use-hybrid-*.ts    # Hybrid storage hooks
+│   ├── 📄 use-supabase-*.ts  # Supabase hooks
+│   └── 📄 use-optimistic-*.ts # Optimistic update hooks
 │
 ├── 📁 lib/                    # Utilities
+│   ├── 📄 animations.ts      # Animation utilities
+│   ├── 📄 design-tokens.ts   # Design system tokens
+│   ├── 📄 form-utils.ts      # Form helpers
+│   ├── 📄 notification-service.ts # Notifications
+│   ├── 📄 offline-storage.ts # Offline data
 │   ├── 📄 storage.ts         # localStorage utilities
+│   ├── 📄 supabase.ts        # Supabase client
+│   ├── 📄 supabase-utils.ts  # Supabase helpers
 │   └── 📄 utils.ts           # General utilities
+│
+├── 📁 test/                   # Test files
+│   ├── 📄 setup.ts           # Test setup
+│   ├── 📄 accessibility.test.ts
+│   ├── 📄 cross-device.test.ts
+│   ├── 📄 integration.test.ts
+│   └── 📄 performance.test.ts
 │
 └── 📁 types/                  # TypeScript definitions
     ├── 📄 index.ts           # Core types

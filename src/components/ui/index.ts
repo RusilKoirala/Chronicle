@@ -54,6 +54,9 @@ export { Slider } from './slider';
 export { Separator } from './separator';
 export { FloatingActionButton, FABAction } from './floating-action-button';
 export { FloatingActionMenu } from './floating-action-menu';
+export { Skeleton } from './skeleton';
+export { LoadingSkeleton, InlineLoader, PageLoader } from './loading-skeleton';
+export { OfflineIndicator, OfflineBadge } from './offline-indicator';
 
 // Design System Utilities
 export { designSystem } from '../../lib/design-tokens';

@@ -10,6 +10,9 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/u
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Plus, Search } from 'lucide-react';
 import { useHybridTasks } from '@/hooks/use-hybrid-tasks';
+import { useActionChaining } from '@/hooks/use-action-chaining';
+import { NextStepSuggestionsCompact } from '@/components/ui/next-step-suggestions';
+import { useDeviceDetection } from '@/hooks/use-device-detection';
 
 export function TaskList() {
   const { 
@@ -21,6 +24,9 @@ export function TaskList() {
     getActiveTasks,
     getCompletedTasks
   } = useHybridTasks();
+  
+  const { suggestions, trackAction, clearSuggestions, executeSuggestion } = useActionChaining();
+  const { isMobile } = useDeviceDetection();
   
   const [isFormOpen, setIsFormOpen] = useState(false);
   const [editingTask, setEditingTask] = useState<Task | null>(null);
@@ -75,6 +81,28 @@ export function TaskList() {
     if (confirm('Are you sure you want to delete this task?')) {
       deleteTask(id);
     }
+  };
+
+  const handleReschedule = (id: string, newDate: string) => {
+    updateTask(id, { dueDate: newDate });
+  };
+
+  const handleToggleComplete = (id: string) => {
+    const task = tasks.find(t => t.id === id);
+    toggleComplete(id);
+    
+    // Track action for next-step suggestions
+    if (task && !task.completed) {
+      trackAction('task', task);
+    }
+  };
+  
+  const handleUpdateTitle = (id: string, title: string) => {
+    updateTask(id, { title });
+  };
+  
+  const handleUpdateDescription = (id: string, description: string) => {
+    updateTask(id, { description });
   };
 
   const handleCancel = () => {
@@ -153,7 +181,11 @@ export function TaskList() {
                   task={task}
                   onEdit={handleEdit}
                   onDelete={handleDelete}
-                  onToggleComplete={toggleComplete}
+                  onToggleComplete={handleToggleComplete}
+                  onReschedule={handleReschedule}
+                  onUpdateTitle={handleUpdateTitle}
+                  onUpdateDescription={handleUpdateDescription}
+                  enableInlineEdit={true}
                 />
               ))}
             </div>
@@ -176,6 +208,15 @@ export function TaskList() {
           />
         </DialogContent>
       </Dialog>
+
+      {/* Next-step suggestions after completing a task */}
+      {isMobile && suggestions.length > 0 && (
+        <NextStepSuggestionsCompact
+          suggestions={suggestions}
+          onExecute={executeSuggestion}
+          onDismiss={clearSuggestions}
+        />
+      )}
     </div>
   );
 }

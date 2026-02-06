@@ -1,7 +1,7 @@
 'use client';
 
 import { usePathname } from 'next/navigation';
-import { Navigation } from './navigation';
+import { OptimizedNavigation } from './optimized-navigation';
 
 export function ConditionalNavigation() {
   const pathname = usePathname();
@@ -14,5 +14,5 @@ export function ConditionalNavigation() {
     return null;
   }
   
-  return <Navigation />;
+  return <OptimizedNavigation />;
 }

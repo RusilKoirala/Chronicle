@@ -7,12 +7,15 @@ import { Badge } from '@/components/ui/badge';
 import { Progress } from '@/components/ui/progress';
 import { Pencil, Trash2, Target } from 'lucide-react';
 import { format } from 'date-fns';
+import { useContextualActions } from '@/hooks/use-contextual-actions';
+import { QuickActions } from '@/components/ui/contextual-actions-menu';
 
 interface GoalCardProps {
   goal: Goal;
   onEdit: (goal: Goal) => void;
   onDelete: (id: string) => void;
   onUpdateProgress: (id: string, progress: number) => void;
+  onAddRelatedTask?: (goalId: string) => void;
 }
 
 const statusColors = {
@@ -27,7 +30,15 @@ const statusLabels = {
   'completed': 'Completed'
 };
 
-export function GoalCard({ goal, onEdit, onDelete, onUpdateProgress }: GoalCardProps) {
+export function GoalCard({ goal, onEdit, onDelete, onUpdateProgress, onAddRelatedTask }: GoalCardProps) {
+  const { actions } = useContextualActions({
+    entity: goal,
+    entityType: 'goal',
+    onUpdateProgress,
+    onAddRelatedTask,
+    onEdit,
+  });
+
   const handleProgressClick = () => {
     if (goal.status === 'completed') {
       onUpdateProgress(goal.id, 0);
@@ -41,20 +52,12 @@ export function GoalCard({ goal, onEdit, onDelete, onUpdateProgress }: GoalCardP
   return (
     <Card className="hover:shadow-md transition-shadow">
       <CardHeader className="pb-3">
-        <div className="flex items-start justify-between">
-          <div className="flex items-center gap-2">
-            <Target className="h-4 w-4 text-muted-foreground" />
-            <CardTitle className="text-lg">{goal.title}</CardTitle>
+        <div className="flex items-start justify-between gap-2">
+          <div className="flex items-center gap-2 flex-1 min-w-0">
+            <Target className="h-4 w-4 text-muted-foreground flex-shrink-0" />
+            <CardTitle className="text-lg truncate">{goal.title}</CardTitle>
           </div>
-          <div className="flex gap-1">
-            <Button
-              variant="ghost"
-              size="icon"
-              onClick={() => onEdit(goal)}
-              className="h-8 w-8"
-            >
-              <Pencil className="h-3 w-3" />
-            </Button>
+          <div className="flex gap-1 flex-shrink-0">
             <Button
               variant="ghost"
               size="icon"
@@ -96,6 +99,13 @@ export function GoalCard({ goal, onEdit, onDelete, onUpdateProgress }: GoalCardP
         <div className="text-xs text-muted-foreground">
           Created {format(new Date(goal.createdAt), 'MMM dd, yyyy')}
         </div>
+        
+        {/* Contextual quick actions */}
+        {goal.status !== 'completed' && actions.length > 0 && (
+          <div className="pt-2 border-t">
+            <QuickActions actions={actions} maxVisible={3} />
+          </div>
+        )}
       </CardContent>
     </Card>
   );

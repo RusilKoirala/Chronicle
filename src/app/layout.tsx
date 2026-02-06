@@ -3,8 +3,13 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { ConditionalNavigation } from "@/components/layout/conditional-navigation";
 import { ConditionalMainLayout } from "@/components/layout/conditional-main-layout";
+import { NavigationStateManager } from "@/components/layout/navigation-state-manager";
 import { ThemeProvider } from "@/components/theme-provider";
 import { AuthProvider } from "@/components/auth/auth-provider";
+import { OfflineProvider } from "@/components/providers/offline-provider";
+import { OfflineIndicator } from "@/components/ui/offline-indicator";
+import { Analytics } from "@vercel/analytics/react";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -61,10 +66,16 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           <AuthProvider>
-            <ConditionalNavigation />
-            <ConditionalMainLayout>
-              {children}
-            </ConditionalMainLayout>
+            <OfflineProvider>
+              <OfflineIndicator position="top" />
+              <NavigationStateManager />
+              <ConditionalNavigation />
+              <ConditionalMainLayout>
+                {children}
+              </ConditionalMainLayout>
+              <Analytics />
+              <SpeedInsights />
+            </OfflineProvider>
           </AuthProvider>
         </ThemeProvider>
       </body>

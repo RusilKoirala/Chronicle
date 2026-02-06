@@ -51,13 +51,8 @@ coverage/
 *.tsbuildinfo
 
 # Mobile
-android/app/build/
-android/app/release/
-android/gradle/
-android/.gradle/
-ios/App/build/
-ios/App/Pods/
-ios/App/App.xcworkspace/xcuserdata/
+android/
+ios/
 
 # Capacitor
 android/app/src/main/assets/public/
@@ -76,6 +71,5 @@ pnpm-lock.yaml
 *.tgz
 *.tar.gz
 
-/android/
-/ios/
-/.kiro/
+# Kiro IDE
+.kiro/

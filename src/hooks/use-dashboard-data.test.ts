@@ -9,41 +9,47 @@ import * as fc from 'fast-check'
 import { Task, Goal, Routine } from '@/types'
 
 // Generators for test data
+// Use integer timestamps to avoid invalid date issues
+const timestampArbitrary = fc.integer({ 
+  min: new Date('2020-01-01').getTime(), 
+  max: new Date('2030-12-31').getTime() 
+}).map(ts => new Date(ts).toISOString())
+
 const taskArbitrary = fc.record({
   id: fc.string({ minLength: 1 }),
   title: fc.string({ minLength: 1 }),
   description: fc.option(fc.string()),
   completed: fc.boolean(),
-  priority: fc.constantFrom('low', 'medium', 'high'),
-  dueDate: fc.option(fc.date().map(d => d.toISOString())),
-  createdAt: fc.date().map(d => d.toISOString()),
-  updatedAt: fc.date().map(d => d.toISOString()),
+  isRoutine: fc.boolean(),
+  dueDate: fc.option(timestampArbitrary),
+  reminderTime: fc.option(fc.string()),
+  createdAt: timestampArbitrary,
+  updatedAt: timestampArbitrary,
   userId: fc.string(),
-}) as fc.Arbitrary<Task>
+}) as fc.Arbitrary<Task & { userId: string }>
 
 const goalArbitrary = fc.record({
   id: fc.string({ minLength: 1 }),
   title: fc.string({ minLength: 1 }),
   description: fc.option(fc.string()),
-  status: fc.constantFrom('not-started', 'in-progress', 'completed', 'on-hold'),
+  status: fc.constantFrom('not-started', 'in-progress', 'completed'),
   progress: fc.integer({ min: 0, max: 100 }),
-  targetDate: fc.option(fc.date().map(d => d.toISOString())),
-  createdAt: fc.date().map(d => d.toISOString()),
-  updatedAt: fc.date().map(d => d.toISOString()),
+  targetDate: fc.option(timestampArbitrary),
+  createdAt: timestampArbitrary,
+  updatedAt: timestampArbitrary,
   userId: fc.string(),
-}) as fc.Arbitrary<Goal>
+}) as fc.Arbitrary<Goal & { userId: string }>
 
 const routineArbitrary = fc.record({
   id: fc.string({ minLength: 1 }),
   title: fc.string({ minLength: 1 }),
-  description: fc.option(fc.string()),
-  frequency: fc.constantFrom('daily', 'weekly', 'monthly'),
+  daysOfWeek: fc.array(fc.integer({ min: 0, max: 6 }), { minLength: 1, maxLength: 7 }),
   time: fc.string(),
   isActive: fc.boolean(),
-  createdAt: fc.date().map(d => d.toISOString()),
-  updatedAt: fc.date().map(d => d.toISOString()),
+  createdAt: timestampArbitrary,
+  updatedAt: timestampArbitrary,
   userId: fc.string(),
-}) as fc.Arbitrary<Routine>
+}) as fc.Arbitrary<Routine & { userId: string }>
 
 // Helper functions to test the priority system logic
 function getOverdueTasks(tasks: Task[]): Task[] {
